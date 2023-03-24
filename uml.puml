@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class HockeyLeague {
+
+-teams: List<HockeyTeam>
+
++checkTeamsSize(): void
++getTeamsWithSameCoach(Coach coach): List<Coach>
++getTeamWithMostWins(): HockeyTeam
++getNumberOfWinsForEachTeam(): Map<HockeyTeam, Integer>
+
+}
+
+class HockeyTeam {
+-name: String
+-players: List<Player>
+-captain: Player
+-coach: Optional<Coach>
+-gameHistory: List<Game>
+
++checkPlayersSize(): void
++addPlayer(Player player): void
+}
+
+abstract class Person {
+-name: String
+-address: String
+}
+
+class Player extends Person {
+-shirtNumber: int
+-position: Position
+}
+
+class Coach extends Person {
+-accreditationLevel: AccreditationLevel
+-yearsOfExperience: int
+
+}
+
+class Game {
+-location: String
+-score: Map<HockeyTeam, Integer>
+
+initScore(HockeyTeam home, HockeyTeam away)
+getWinner(): HockeyTeam
+}
+
+enum Position {
+    ATTACKER,
+    DEFENDER,
+    GOALKEEPER
+}
+
+enum AccreditationLevel {
+    BEGINNER,
+    SENIOR,
+    EXPERT
+}
+
+HockeyLeague o-- HockeyTeam
+HockeyTeam o-- Player
+HockeyTeam o-- Coach
+HockeyTeam --|> Game
+
+AccreditationLevel --> Coach
+Position --> Player
+
+
+@enduml
